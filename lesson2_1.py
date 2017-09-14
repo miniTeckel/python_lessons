@@ -66,7 +66,7 @@ def write_cook_book(cook_book, file_name):
                                ing["measure"]))
 
 
-def read_recep(lines):
+def read_recipe(lines):
     i = 0
     name = lines[0]
     ingredients = []
@@ -88,7 +88,7 @@ def read_cook_book(file_name):
         book = [line.rstrip('\n') for line in cb_file]
     i = 0
     while i < len(book):
-        name_res, list_ing = read_recep(book[i:])
+        name_res, list_ing = read_recipe(book[i:])
         cook_book[name_res] = list_ing
         i += len(list_ing) + 2
 
