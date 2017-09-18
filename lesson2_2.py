@@ -6,35 +6,30 @@ Lesson 2.2
 
 import sys
 import json
+import yaml
 from pprint import pprint
 
-COOK_BOOK = {
-    'яйчница': [
-        {'ingridient_name': 'яйца', 'quantity': 2, 'measure': 'шт.'},
-        {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'}
-    ],
-    'стейк': [
-        {'ingridient_name': 'говядина', 'quantity': 300, 'measure': 'гр.'},
-        {'ingridient_name': 'специи', 'quantity': 5, 'measure': 'гр.'},
-        {'ingridient_name': 'масло', 'quantity': 10, 'measure': 'мл.'}
-    ],
-    'салат': [
-        {'ingridient_name': 'помидоры', 'quantity': 100, 'measure': 'гр.'},
-        {'ingridient_name': 'огурцы', 'quantity': 100, 'measure': 'гр.'},
-        {'ingridient_name': 'масло', 'quantity': 100, 'measure': 'мл.'},
-        {'ingridient_name': 'лук', 'quantity': 1, 'measure': 'шт.'}
-    ]
-}
 
-def write_cook_book(cook_book, file_name):
+def write_cook_book_json(cook_book, file_name):
     with open(file_name, "wt", encoding="utf8") as cb_file:
         json.dump(cook_book, cb_file, indent=2)
         #book=json.dumps(cook_book, indent=2)
-        #cb_file.write(book)
+        # cb_file.write(book)
 
-def read_cook_book(file_name):
+
+def write_cook_book_yaml(cook_book, file_name):
+    with open(file_name, "wt", encoding="utf8") as cb_file:
+        yaml.dump(cook_book, cb_file, indent=2)
+
+
+def read_cook_book_json(file_name):
     with open(file_name, "rt", encoding="utf8") as cb_file:
         return json.load(cb_file)
+
+
+def read_cook_book_yaml(file_name):
+    with open(file_name, "rt", encoding="utf8") as cb_file:
+        return yaml.load(cb_file)
 
 
 def usage():
@@ -45,6 +40,13 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         usage()
     else:
-        #write_cook_book(COOK_BOOK, sys.argv[1])
-        book=read_cook_book(sys.argv[1])
-        pprint(book)
+        file_name = sys.argv[1]
+        file_ext = file_name.split(".")[-1]
+        if file_ext == "json":
+            print("Reading JSON:")
+            book1 = read_cook_book_json(file_name)
+            pprint(book1)
+        elif file_ext == "yaml":
+            print("Reading YAML:")
+            book = read_cook_book_yaml(file_name)
+            pprint(book)
