@@ -25,10 +25,10 @@ COOK_BOOK = {
 }
 
 
-def get_shop_list_by_dishes(dishes, person_count):
+def get_shop_list_by_dishes(cook_book, dishes, person_count):
     shop_list = {}
     for dish in dishes:
-        for ingridient in COOK_BOOK[dish]:
+        for ingridient in cook_book[dish]:
             new_shop_list_item = dict(ingridient)
 
             new_shop_list_item['quantity'] *= person_count
@@ -47,11 +47,11 @@ def print_shop_list(shop_list):
                                 shop_list_item['measure']))
 
 
-def create_shop_list():
+def create_shop_list(cook_book):
     person_count = int(input('Введите количество человек: '))
     dishes = input('Введите блюда в расчете на одного человека (через запятую): ') \
         .lower().split(', ')
-    shop_list = get_shop_list_by_dishes(dishes, person_count)
+    shop_list = get_shop_list_by_dishes(cook_book, dishes, person_count)
     print_shop_list(shop_list)
 
 
@@ -67,12 +67,12 @@ def write_cook_book(cook_book, file_name):
 
 
 def read_recipe(lines):
-    i = 0
     name = lines[0]
     ingredients = []
     count = int(lines[1])
-    for i in range(2, count + 2):
-        ingridient_name, quantity, measure = lines[i].split(" | ")
+    ingredients_lines = lines[2:count + 2]
+    for ingredient in ingredients_lines:
+        ingridient_name, quantity, measure = ingredient.split(" | ")
         ingr = {}
         ingr["ingridient_name"] = ingridient_name
         ingr["quantity"] = int(quantity)
@@ -104,5 +104,5 @@ if __name__ == "__main__":
         usage()
     else:
         #write_cook_book(cook_book, sys.argv[1])
-        COOK_BOOK2 = read_cook_book(sys.argv[1])
-        print(COOK_BOOK2)
+        cook_book2 = read_cook_book(sys.argv[1])
+        print(cook_book2)
