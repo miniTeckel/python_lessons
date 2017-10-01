@@ -1,18 +1,17 @@
 import os
-
+import glob
 
 def get_all_files(dir_path):
-    return [os.path.join(dir_path, f) for f in os.listdir(dir_path) if os.path.splitext(f)[1] == ".sql"]
-
+    return glob.glob(dir_path)
 
 def print_files(files):
-    for path in files:
-        print(path)
+    print('\n'.join(files))
+    print("Всего: %d"%len(files))
 
 
 def check_file(path, string):
     with open(path, "rt") as file:
-        return (string in file.read())
+        return string in file.read()
 
 
 def filter_files(files, string):
@@ -20,7 +19,9 @@ def filter_files(files, string):
 
 
 if __name__ == "__main__":
-    files = get_all_files(os.getcwd())
+    migrations = 'Migrations'
+    files = get_all_files(os.path.join(migrations, "*.sql"))
+
     print_files(files)
     while files:
         string = input("search string: ")
@@ -28,3 +29,4 @@ if __name__ == "__main__":
         print_files(files)
     else:
         print("no such files")
+
