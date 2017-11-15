@@ -1,8 +1,7 @@
 import os
-import glob
 
 def get_all_files(dir_path):
-    return glob.glob(dir_path)
+    return [os.path.join(dir_path, f) for f in os.listdir(dir_path) if os.path.splitext(f)[1] == ".sql"]
 
 def print_files(files):
     print('\n'.join(files))
@@ -20,8 +19,8 @@ def filter_files(files, string):
 
 if __name__ == "__main__":
     migrations = 'Migrations'
-    files = get_all_files(os.path.join(migrations, "*.sql"))
-
+    files = get_all_files(migrations)
+    
     print_files(files)
     while files:
         string = input("search string: ")
@@ -29,4 +28,3 @@ if __name__ == "__main__":
         print_files(files)
     else:
         print("no such files")
-
