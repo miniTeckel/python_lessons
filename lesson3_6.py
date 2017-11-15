@@ -14,50 +14,46 @@ class Animal:
         pass
 
 
-class Cow(Animal):
+class Mammal(Animal):
     def __init__(self, name):
         self.name = name
+    
+    def give_milk(self):
+        print("milk")
 
+class Bird(Animal):
+    def __init__(self, sex = "female"):
+        self.sex = sex
+    
+    def lay_egg(self):
+        print("12 eggs")
+
+class Cow(Mammal):
     def speak(self):
         return "му-му"
 
 
-class Pig(Animal):
-    def __init__(self, name):
-        self.name = name
-
-
+class Pig(Mammal):
     def speak(self):
         return "хрю-хрю"
 
 
-class Sheep(Animal):
-    def __init__(self, name):
-        self.name = name
-
-
+class Sheep(Mammal):
     def speak(self):
         return "бе-бе"
 
 
-class Goat(Animal):
-    def __init__(self, name):
-        self.name = name
-
-
+class Goat(Mammal):
     def speak(self):
         return "ме-ме"
 
 
-class Goose(Animal):
+class Goose(Bird):
     def speak(self):
         return "га-га"
 
 
-class Chiken(Animal):
-    def __init__(self, sex = "female"):
-        self.sex = sex
-
+class Chiken(Bird):
     def speak(self):
         if self.sex == "male":
             return "ку-ка-ре-ку"
@@ -65,7 +61,7 @@ class Chiken(Animal):
             return "ко-ко-ко"
 
 
-class Duck(Animal):
+class Duck(Bird):
     def speak(self):
         return "кря-кря"
 
