@@ -15,19 +15,24 @@ class VK_API:
         self.access_token = access_token
 
     def get_all_friends(self, user_id):   
-        params = {
-            'access_token': self.access_token,
-            'v': self.VK_API_VER,    
-        }
+        params = {}
+        if not user_id is None:
+            params["user_id"] = user_id 
 
+        response = self._call_vk_api("friends.get", params)
+        if response:
+            return response["items"]
+        return []
 
-        response = requests.get("%s%s" %(self.VK_URL, "friends.get"), params=params)
+    def _call_vk_api(self, method, params):   
+        params["access_token"] = self.access_token
+        params["v"] = self.VK_API_VER
+        response = requests.get("%s%s" %(self.VK_URL, method), params=params)
         json_ = response.json()
         if "response" in json_:
-            return json_['response']['items']
-        print(json_)
-        return []
-    
+            return json_['response']
+        return {}
+   
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
