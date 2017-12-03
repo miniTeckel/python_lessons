@@ -32,8 +32,18 @@ class VK_API:
         if "response" in json_:
             return json_['response']
         return {}
-   
 
+    def get_id(self, user_name):   
+        params = {}
+        if not user_name is None:
+            params["user_ids"] = user_name 
+
+        response = self._call_vk_api("users.get", params)
+        if response:
+            return response[0]["id"]
+        return None
+       
+    
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     group = parser.add_mutually_exclusive_group(required=True)
@@ -43,7 +53,11 @@ if __name__ == "__main__":
     parser.add_argument('--token', help='access token', required=True)
     args = parser.parse_args()
 
-    #print (args) 
     vk_api = VK_API(args.token)
+    if args.username:
+        args.id = vk_api.get_id(args.username)
+
+    
+    #print (vk_api.get_id(args.username))
     friends_id = vk_api.get_all_friends(args.id)
     print (friends_id)
