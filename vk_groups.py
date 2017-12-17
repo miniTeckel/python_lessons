@@ -43,15 +43,15 @@ class VK_API:
         params["access_token"] = self.access_token
         params["v"] = self.VK_API_VER
         response = requests.get("%s%s" % (self.VK_URL, method), params=params)
-        json_ = response.json()
-        if "response" in json_:
-            return json_['response']
+        result = response.json()
+        if "response" in result:
+            return result['response']
         else:
-            raise LookupError(json_["error"]["error_msg"])
+            raise LookupError(result["error"]["error_msg"])
 
     def get_id(self, user_name):
         params = {}
-        if not user_name is None:
+        if user_name is not None:
             params["user_ids"] = user_name
 
         response = self._call_vk_api("users.get", params)
@@ -85,7 +85,7 @@ def format_result(groups):
 
 def output_result(file, result):
     with open(file, 'wt') as f:
-        f.write(json.dumps(result, indent=4))
+        f.write(json.dumps(result, indent=4, ensure_ascii=False))
 
 
 if __name__ == "__main__":
